@@ -1,0 +1,23 @@
+{
+  "pins": {
+    "nix-vscode-extensions": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "nix-vscode-extensions"
+      },
+      "branch": "master",
+      "revision": "018196c371073d669510fd69dd2f6dc0ec608c41",
+      "url": "https://github.com/nix-community/nix-vscode-extensions/archive/018196c371073d669510fd69dd2f6dc0ec608c41.tar.gz",
+      "hash": "0ivnmqjjcch6lj61czb8njxqp6gw5hc5w8knbs22px96yqa9kqcq"
+    },
+    "nixpkgs": {
+      "type": "Channel",
+      "name": "nixos-unstable",
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-24.11pre688563.bc947f541ae5/nixexprs.tar.xz",
+      "hash": "1jsaxwi128fiach3dj8rdj5agqivsr4sidb8lmdnl7g07fl9x0kj"
+    }
+  },
+  "version": 3
+}
