@@ -1,0 +1,7 @@
+[workspace]
+members = [
+    "faust-test",
+]
+resolver="2"
+
+
