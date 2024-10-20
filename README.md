@@ -36,8 +36,9 @@ currently this is my playground.
     - [x] poc
     - [ ] as lib
 - [ ] faust-benchmark
-- [ ] 
-
+- [ ] faust-new-ui
+- [ ] faust-macro make use of out dir for generated code
+- [ ] faust-build allow no architecture file.
 
 # Licence
 
