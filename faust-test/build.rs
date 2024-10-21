@@ -5,13 +5,18 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::{env, fs};
 
-fn build_with_faust(in_file: &str, out_file: &str) {
-    FaustBuilder::new(in_file, out_file)
-        .set_faust_path("../faust/build/bin/faust")
+fn build_with_faust(in_file: &str, out_file: &str, xml_dir: &str) {
+    let dir = env::var("CARGO_MANIFEST_DIR").unwrap();
+    let dir = Path::new(&dir);
+    let faust_path: &Path = &dir.join("../faust/");
+    let fb = FaustBuilder::new(in_file, out_file)
+        .set_faust_path(faust_path.join("build/bin/faust").to_str().unwrap())
         .set_arch_file("./faust-template.rs")
         .faust_arg("-I")
-        .faust_arg("../faust/libraries/")
-        .build();
+        .faust_arg(faust_path.join("libraries/").to_str().unwrap());
+
+    fb.build_xml(xml_dir);
+    fb.build();
 }
 
 fn generate_mod_rs(path: PathBuf) -> std::io::Result<()> {
@@ -73,17 +78,25 @@ fn build_faust() {
     }
 }
 
-fn maybe_build_with_faust(file_path: PathBuf, out_path: PathBuf) {
+fn maybe_build_with_faust(file_path: PathBuf, out_path: PathBuf, xml_path: PathBuf) {
     let src_metadata = fs::metadata(&file_path).unwrap();
     let gen_metadata = fs::metadata(&out_path);
 
     match gen_metadata {
         Ok(gen_metadata) => {
             if src_metadata.modified().unwrap() > gen_metadata.modified().unwrap() {
-                build_with_faust(file_path.to_str().unwrap(), out_path.to_str().unwrap());
+                build_with_faust(
+                    file_path.to_str().unwrap(),
+                    out_path.to_str().unwrap(),
+                    xml_path.to_str().unwrap(),
+                );
             }
         }
-        Err(_) => build_with_faust(file_path.to_str().unwrap(), out_path.to_str().unwrap()),
+        Err(_) => build_with_faust(
+            file_path.to_str().unwrap(),
+            out_path.to_str().unwrap(),
+            xml_path.to_str().unwrap(),
+        ),
     };
 }
 
@@ -92,8 +105,10 @@ fn generate_dsp() {
     let dir = Path::new(&dir);
     let dsp_path: &Path = &dir.join("../faust/tests/impulse-tests/dsp");
     let out_path: &Path = &dir.join("src/gen");
+    let xml_path: &Path = &dir.join("src/xml");
 
     fs::create_dir_all(out_path).unwrap();
+    fs::create_dir_all(xml_path).unwrap();
 
     let entries = fs::read_dir(dsp_path).expect("cannot read dir");
     entries
@@ -124,7 +139,7 @@ fn generate_dsp() {
                 .join(file_path.file_name().unwrap())
                 .with_extension("rs");
 
-            maybe_build_with_faust(file_path, out_path);
+            maybe_build_with_faust(file_path, out_path, xml_path.to_path_buf());
         });
 
     generate_mod_rs(out_path.to_path_buf()).unwrap();

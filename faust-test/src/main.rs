@@ -1,13 +1,15 @@
+#![recursion_limit = "256"]
 mod gen;
 
 fn main() {
-    let afp = gen::APF::Apf::new();
+    // let afp = gen::APF::Apf::new();
 }
 
 #[cfg(test)]
 mod tests {
-    use super::*;
 
     #[test]
-    fn exploration() {}
+    fn todo() {
+        dbg!("todo");
+    }
 }
