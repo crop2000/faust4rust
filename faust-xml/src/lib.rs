@@ -1,4 +1,3 @@
-use quick_xml::de::from_str;
 use quick_xml::impl_deserialize_for_internally_tagged_enum;
 use serde::Deserialize;
 
@@ -40,7 +39,8 @@ pub struct UI {
 #[serde(deny_unknown_fields)]
 pub struct ActiveWidgets {
     pub count: usize,
-    pub widget: Option<Vec<ActiveWidget>>,
+    #[serde(default)]
+    pub widget: Vec<ActiveWidget>,
 }
 
 #[derive(Debug, PartialEq)]
@@ -72,7 +72,8 @@ pub struct VSlider {
     pub min: f32,
     pub max: f32,
     pub step: f32,
-    pub meta: Option<Vec<Meta>>,
+    #[serde(default)]
+    pub meta: Vec<Meta>,
 }
 #[derive(Debug, Deserialize, PartialEq)]
 #[serde(deny_unknown_fields)]
@@ -85,7 +86,8 @@ pub struct HSlider {
     pub min: f32,
     pub max: f32,
     pub step: f32,
-    pub meta: Option<Vec<Meta>>,
+    #[serde(default)]
+    pub meta: Vec<Meta>,
 }
 #[derive(Debug, Deserialize, PartialEq)]
 #[serde(deny_unknown_fields)]
@@ -98,7 +100,8 @@ pub struct NEntry {
     pub min: f32,
     pub max: f32,
     pub step: f32,
-    pub meta: Option<Vec<Meta>>,
+    #[serde(default)]
+    pub meta: Vec<Meta>,
 }
 #[derive(Debug, Deserialize, PartialEq)]
 #[serde(deny_unknown_fields)]
@@ -108,7 +111,8 @@ pub struct Button {
     pub label: String,
     pub varname: String,
     pub init: Option<f32>,
-    pub meta: Option<Vec<Meta>>,
+    #[serde(default)]
+    pub meta: Vec<Meta>,
 }
 #[derive(Debug, Deserialize, PartialEq)]
 #[serde(deny_unknown_fields)]
@@ -118,14 +122,16 @@ pub struct CheckBox {
     pub label: String,
     pub varname: String,
     pub init: Option<f32>,
-    pub meta: Option<Vec<Meta>>,
+    #[serde(default)]
+    pub meta: Vec<Meta>,
 }
 
 #[derive(Debug, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct PassiveWidgets {
     pub count: usize,
-    pub widget: Option<Vec<PassiveWidget>>,
+    #[serde(default)]
+    pub widget: Vec<PassiveWidget>,
 }
 
 #[derive(Debug, PartialEq)]
@@ -149,7 +155,8 @@ pub struct VBarGraph {
     pub varname: String,
     pub min: f32,
     pub max: f32,
-    pub meta: Option<Vec<Meta>>,
+    #[serde(default)]
+    pub meta: Vec<Meta>,
 }
 #[derive(Debug, Deserialize, PartialEq)]
 #[serde(deny_unknown_fields)]
@@ -160,15 +167,16 @@ pub struct HBarGraph {
     pub varname: String,
     pub min: f32,
     pub max: f32,
-    pub meta: Option<Vec<Meta>>,
+    #[serde(default)]
+    pub meta: Vec<Meta>,
 }
 
 #[derive(Debug, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct SoundfileWidgets {
     pub count: usize,
-    #[serde(rename = "$soundfiles")]
-    pub soundfiles: Option<Vec<SoundfileWidgets>>,
+    #[serde(rename = "$soundfiles", default)]
+    pub soundfiles: Vec<SoundfileWidgets>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -192,8 +200,8 @@ pub struct Group {
     #[serde(rename = "@type")]
     pub r#type: String,
     pub label: String,
-    #[serde(rename = "$value")]
-    pub items: Option<Vec<LayoutItem>>,
+    #[serde(rename = "$value", default)]
+    pub items: Vec<LayoutItem>,
 }
 
 #[derive(Debug, Deserialize)]

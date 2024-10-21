@@ -16,7 +16,7 @@ fn parse_file(p: PathBuf) -> Result<Faust, serde_path_to_error::Error<quick_xml:
     let result: Result<Faust, _> = serde_path_to_error::deserialize(f);
     match &result {
         Ok(f) => {
-            // dbg!(f);
+            dbg!(f);
         }
         Err(err) => {
             println!("{}", err);
@@ -79,7 +79,7 @@ fn hand_written() {
                 <step>0.1</step>
                 <meta key="1"></meta>
             </widget>
-            <widget type="vslider" id="3">
+            <widget type="hslider" id="3">
                 <label>volume</label>
                 <varname>fVslider1</varname>
                 <init>0.0</init>
