@@ -1,6 +1,7 @@
 [workspace]
 members = [
     "faust-test",
+    "faust-xml"
 ]
 resolver="2"
 
