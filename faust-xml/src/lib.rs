@@ -185,9 +185,14 @@ pub struct SoundfileWidget {}
 
 #[derive(Debug, Deserialize)]
 #[serde(deny_unknown_fields)]
+pub struct Layout {
+    #[serde(rename = "$value")]
+    pub items: Vec<LayoutItem>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub enum LayoutItem {
-    // #[serde(rename = "label")]
-    // Label(String), // this is stupid this should be treated separately
     #[serde(rename = "group")]
     Group(Group),
     #[serde(rename = "widgetref")]
@@ -209,11 +214,4 @@ pub struct Group {
 pub struct WRef {
     #[serde(rename = "@id")]
     pub id: usize,
-}
-
-#[derive(Debug, Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct Layout {
-    #[serde(rename = "$value")]
-    pub items: Vec<LayoutItem>,
 }

@@ -7,11 +7,11 @@ edition = "2021"
 cfg = ['default-boxed']
 
 [dependencies]
-faust-types = { path = "../../forks/rust-faust/faust-types" } 
+faust-types = { path = "../rust-faust/faust-types" } 
 default-boxed = { version = "*", optional = true }
 
 [build-dependencies]
-faust-build = { path = "../../forks/rust-faust/faust-build" } #faust_path branch
+faust-build = { path = "../rust-faust/faust-build" } #faust_path branch
 quote = "^1.0"
 prettyplease = "^0.2"
 proc-macro2 = "^1.0"

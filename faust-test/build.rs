@@ -5,18 +5,29 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::{env, fs};
 
-fn build_with_faust(in_file: &str, out_file: &str, xml_dir: &str) {
+fn build_with_faust(in_file: &str, out_path_scalar: &str, out_path_vector: &str, xml_dir: &str) {
     let dir = env::var("CARGO_MANIFEST_DIR").unwrap();
     let dir = Path::new(&dir);
     let faust_path: &Path = &dir.join("faust/");
-    let fb = FaustBuilder::new(in_file, out_file)
+    let fb = FaustBuilder::new(in_file, out_path_scalar)
         .set_faust_path(faust_path.join("build/bin/faust").to_str().unwrap())
         .set_arch_file("./faust-template.rs")
         .faust_arg("-I")
         .faust_arg(faust_path.join("libraries/").to_str().unwrap());
 
     fb.build_xml(xml_dir);
+
     fb.build();
+
+    let fbv = FaustBuilder::new(in_file, out_path_vector)
+        .set_faust_path(faust_path.join("build/bin/faust").to_str().unwrap())
+        .set_arch_file("./faust-template.rs")
+        .faust_arg("-vec")
+        .faust_arg("-vs")
+        .faust_arg("4")
+        .faust_arg("-I")
+        .faust_arg(faust_path.join("libraries/").to_str().unwrap());
+    fbv.build();
 }
 
 fn generate_mod_rs(path: PathBuf) -> std::io::Result<()> {
@@ -53,13 +64,7 @@ fn generate_mod_rs(path: PathBuf) -> std::io::Result<()> {
 
 fn prepare_submodules() {
     Command::new("git")
-        .args([
-            "submodule",
-            "update",
-            "--init",
-            "--depth 1",
-            "--recommend-shallow",
-        ])
+        .args(["submodule", "update", "--init", "--recursive", "--remote"])
         .output()
         .unwrap();
 }
@@ -78,23 +83,31 @@ fn build_faust() {
     }
 }
 
-fn maybe_build_with_faust(file_path: PathBuf, out_path: PathBuf, xml_path: PathBuf) {
+fn maybe_build_with_faust(
+    file_path: PathBuf,
+    out_path_scalar: PathBuf,
+    out_path_vector: PathBuf,
+    xml_path: PathBuf,
+) {
     let src_metadata = fs::metadata(&file_path).unwrap();
-    let gen_metadata = fs::metadata(&out_path);
+    let scalar_metadata = fs::metadata(&out_path_scalar);
+    // let vector_metadata = fs::metadata(&out_path_vector);
 
-    match gen_metadata {
+    match scalar_metadata {
         Ok(gen_metadata) => {
             if src_metadata.modified().unwrap() > gen_metadata.modified().unwrap() {
                 build_with_faust(
                     file_path.to_str().unwrap(),
-                    out_path.to_str().unwrap(),
+                    out_path_scalar.to_str().unwrap(),
+                    out_path_vector.to_str().unwrap(),
                     xml_path.to_str().unwrap(),
                 );
             }
         }
         Err(_) => build_with_faust(
             file_path.to_str().unwrap(),
-            out_path.to_str().unwrap(),
+            out_path_scalar.to_str().unwrap(),
+            out_path_vector.to_str().unwrap(),
             xml_path.to_str().unwrap(),
         ),
     };
@@ -104,10 +117,12 @@ fn generate_dsp() {
     let dir = env::var("CARGO_MANIFEST_DIR").unwrap();
     let dir = Path::new(&dir);
     let dsp_path: &Path = &dir.join("./faust/tests/impulse-tests/dsp");
-    let out_path: &Path = &dir.join("src/gen");
+    let out_path_scalar: &Path = &dir.join("src/scalar");
+    let out_path_vector: &Path = &dir.join("src/vector4");
     let xml_path: &Path = &dir.join("src/xml");
 
-    fs::create_dir_all(out_path).unwrap();
+    fs::create_dir_all(out_path_scalar).unwrap();
+    fs::create_dir_all(out_path_vector).unwrap();
     fs::create_dir_all(xml_path).unwrap();
 
     let entries = fs::read_dir(dsp_path).expect("cannot read dir");
@@ -135,18 +150,27 @@ fn generate_dsp() {
         })
         .map(|entry| entry.path())
         .for_each(|file_path| {
-            let out_path = out_path
+            let out_path_scalar = out_path_scalar
+                .join(file_path.file_name().unwrap())
+                .with_extension("rs");
+            let out_path_vector = out_path_vector
                 .join(file_path.file_name().unwrap())
                 .with_extension("rs");
 
-            maybe_build_with_faust(file_path, out_path, xml_path.to_path_buf());
+            maybe_build_with_faust(
+                file_path,
+                out_path_scalar,
+                out_path_vector,
+                xml_path.to_path_buf(),
+            );
         });
 
-    generate_mod_rs(out_path.to_path_buf()).unwrap();
+    generate_mod_rs(out_path_scalar.to_path_buf()).unwrap();
+    generate_mod_rs(out_path_vector.to_path_buf()).unwrap();
 }
 
 fn main() {
-    prepare_submodules();
-    build_faust();
+    // prepare_submodules();
+    // build_faust();
     generate_dsp();
 }

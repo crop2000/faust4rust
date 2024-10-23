@@ -2,3 +2,7 @@
 	path = faust-test/faust
 	url = https://github.com/crop2000/faust.git
 	branch = rust_trait_optional
+[submodule "rust-faust"]
+	path = rust-faust
+	url = https://github.com/crop2000/rust-faust.git
+	branch = faust_path

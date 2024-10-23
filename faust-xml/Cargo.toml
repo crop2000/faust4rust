@@ -9,11 +9,11 @@ edition = "2021"
 cfg = ['default-boxed']
 
 [dependencies]
-faust-types = { path = "../../forks/rust-faust/faust-types" } 
+faust-types = { path = "../rust-faust/faust-types" } 
 default-boxed = { version = "*", optional = true }
 serde = { version = "1.0", features = ["derive"] } 
 quick-xml = { version = "^0.36", features = ["serialize", "serde-types"] } 
 serde_path_to_error = "0.1.16"
 
 [build-dependencies]
-faust-build = { path = "../../forks/rust-faust/faust-build" } 
+faust-build = { path = "../rust-faust/faust-build" } 

@@ -1,8 +1,10 @@
 #![recursion_limit = "256"]
-mod gen;
+
+use faust_types::FaustDsp;
+mod scalar;
 
 fn main() {
-    let afp = faust_types::FaustDsp::new();
+    let afp = <scalar::APF::Apf as FaustDsp>::new();
 }
 
 #[cfg(test)]
