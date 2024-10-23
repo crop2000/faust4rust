@@ -8,7 +8,7 @@ use std::{env, fs};
 fn build_with_faust(in_file: &str, out_file: &str, xml_dir: &str) {
     let dir = env::var("CARGO_MANIFEST_DIR").unwrap();
     let dir = Path::new(&dir);
-    let faust_path: &Path = &dir.join("../faust/");
+    let faust_path: &Path = &dir.join("faust/");
     let fb = FaustBuilder::new(in_file, out_file)
         .set_faust_path(faust_path.join("build/bin/faust").to_str().unwrap())
         .set_arch_file("./faust-template.rs")
@@ -65,7 +65,7 @@ fn prepare_submodules() {
 }
 
 fn build_faust() {
-    let makefile_dir = "../faust";
+    let makefile_dir = "./faust";
 
     // Call the make command to run the Makefile in the specified directory
     let make_command = Command::new("make")
@@ -103,7 +103,7 @@ fn maybe_build_with_faust(file_path: PathBuf, out_path: PathBuf, xml_path: PathB
 fn generate_dsp() {
     let dir = env::var("CARGO_MANIFEST_DIR").unwrap();
     let dir = Path::new(&dir);
-    let dsp_path: &Path = &dir.join("../faust/tests/impulse-tests/dsp");
+    let dsp_path: &Path = &dir.join("./faust/tests/impulse-tests/dsp");
     let out_path: &Path = &dir.join("src/gen");
     let xml_path: &Path = &dir.join("src/xml");
 

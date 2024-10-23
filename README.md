@@ -28,13 +28,13 @@ currently this is my playground.
 - [ ] faust-test
     - [x] poc code generation
     - [ ] setup code generation
-    - [ ] for faust-xml
+    - [x] for faust-xml
     - [ ] for different faust flags
     - [ ] for `-ec` flag
     - [ ] for `-cm` flag
 - [ ] faust-xml
     - [x] poc
-    - [ ] as lib
+    - [x] as lib (initial version)
 - [ ] faust-benchmark
 - [ ] faust-new-ui
 - [ ] faust-macro make use of out dir for generated code

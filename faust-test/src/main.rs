@@ -2,7 +2,7 @@
 mod gen;
 
 fn main() {
-    // let afp = gen::APF::Apf::new();
+    let afp = faust_types::FaustDsp::new();
 }
 
 #[cfg(test)]
