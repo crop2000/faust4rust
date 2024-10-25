@@ -8,11 +8,13 @@ currently this is my playground.
 - [x] provide constants by default
 - [x] treat FaustDsp as Interface
 - [ ] new should be default
-- [ ] implement `-ec` flag for having controls in struct
-- [ ] implement `-cm` flag for outputs as buses
+- [x] implement `-ec` flag for having controls in struct
+- [x] implement `-cm` flag for outputs as buses
+- [ ] implement `-os` flag for one-sample compute function
 - [ ] implement inlineable a one-sample compute function
     - [ ] without `-ec`
     - [ ] with `-ec` 
+    - (maybe this should be treted as obsolete idea)
 - [ ] provide compute functions for various kinds of data 
     - [ ] implement
         - [ ] vectors of vectors
