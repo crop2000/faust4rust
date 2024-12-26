@@ -18,7 +18,12 @@ currently this is my playground.
 - [x] benchmark for vectors and slices and arrays have shown that those differences are optimized away.
 - [x] implemented a generic compute interface
 - [ ] upstream generic compute interface for FaustDsp
-
+- [ ] bargraphs are computed inefficently would be nice if they would be treated more like input controls (difficult to upstream)
+    - [ ] bargraphs could lower the variability of their unshared inputs (not easy)
+    - [ ] bargraphs shortnames are not always unique
+    - [ ] feedback could be implemented differently so that only the "last" is stored in the struct
+    - [ ] controls could be removed from the struct and be passed via compute
+ 
 # todo
 
 - [ ] faust-test
