@@ -6,3 +6,6 @@
 	path = rust-faust
 	url = git@github.com:crop2000/rust-faust.git
 	branch = faust_path
+[submodule "faust-test/criterion.rs"]
+	path = faust-test/criterion.rs
+	url = https://github.com/bheisler/criterion.rs.git

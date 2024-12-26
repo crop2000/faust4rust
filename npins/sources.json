@@ -8,15 +8,15 @@
         "repo": "nix-vscode-extensions"
       },
       "branch": "master",
-      "revision": "018196c371073d669510fd69dd2f6dc0ec608c41",
-      "url": "https://github.com/nix-community/nix-vscode-extensions/archive/018196c371073d669510fd69dd2f6dc0ec608c41.tar.gz",
-      "hash": "0ivnmqjjcch6lj61czb8njxqp6gw5hc5w8knbs22px96yqa9kqcq"
+      "revision": "c10eb0e26ca40bdc952b4d89aee9d0e9b673eb09",
+      "url": "https://github.com/nix-community/nix-vscode-extensions/archive/c10eb0e26ca40bdc952b4d89aee9d0e9b673eb09.tar.gz",
+      "hash": "0ijdr3fc9ficrxplgbj7ndgcgxnv8n7rhzl74h9ndg719a8xqr4m"
     },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-unstable",
-      "url": "https://releases.nixos.org/nixos/unstable/nixos-24.11pre688563.bc947f541ae5/nixexprs.tar.xz",
-      "hash": "1jsaxwi128fiach3dj8rdj5agqivsr4sidb8lmdnl7g07fl9x0kj"
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-25.05beta712559.4633a7c72337/nixexprs.tar.xz",
+      "hash": "0wik0fq8qzyn4lyjq4q1vaghyc68xp8sxjajxfa5rqkgs54zrs3x"
     }
   },
   "version": 3

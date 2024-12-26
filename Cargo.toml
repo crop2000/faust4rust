@@ -4,5 +4,4 @@ members = [
     "faust-xml"
 ]
 resolver="2"
-
-
+exclude = ["criterion.rs"]

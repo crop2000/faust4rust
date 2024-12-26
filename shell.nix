@@ -13,6 +13,7 @@ let
 	inherit (pkgs.vscode-extensions.ms-vscode) cpptools-extension-pack;
 	inherit (pkgs.vscode-extensions.ms-vscode) cpptools;
 	inherit (pkgs.vscode-extensions.davidlday) languagetool-linter;
+	inherit (pkgs.vscode-extensions.llvm-vs-code-extensions) vscode-clangd;
       };
     in
     (vscode-with-extensions.override {
@@ -25,12 +26,18 @@ pkgs.mkShell rec {
     rustcodium
   ];
   nativeBuildInputs = with pkgs; [
+    #gradle
+    #gcc
+    #g++
+    libtool
+    rust-bindgen
     cmake
     cargo
     rustc
     rustfmt
     rustPackages.clippy
     pkgs.rustPlatform.bindgenHook
+    clang-tools
   ];
   buildInputs = with pkgs; [
     pkg-config
@@ -40,8 +47,12 @@ pkgs.mkShell rec {
     wayland
     libxkbcommon
     libGL
-    faust
-    llvm
+    #faust
+    llvm 
+    gnuplot
+    valgrind
+    rust-script
+    libxml2
   ];
   #LD_LIBRARY_PATH = "${pkgs.lib.makeLibraryPath buildInputs}";
 }
